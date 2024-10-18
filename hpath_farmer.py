@@ -7,7 +7,7 @@ import os
 
 def usage(status):
     print("Usage Error:")
-    print("\t ./TravelingSaleman [$File/s]")
+    print("\t ./hpath_farmer [$File/s]")
     sys.exit(status)
 
 
@@ -27,6 +27,7 @@ following lines are of two types
 
 class hamiltonian:
     def __init__(self, hpath, case_no):
+        #detailed description in readme!
         self.is_hpath = hpath
         self.ncase = case_no
 
@@ -85,6 +86,7 @@ def file_read(file, hpaths):
                     
 
 def hpath_dump(hpath):
+    #simple print function to test functionality
     print(f'Case: {hpath.ncase}')
     #print(f'verts: {hpath.verts}')
     #print(f'edges: {hpath.edges}')
@@ -95,28 +97,30 @@ def hpath_dump(hpath):
     print()
 
 def is_hpath(hpath):
+    #get beginning time
     start = time()
 
-    #edge case
+    #edge case: if one vertex
     if hpath.nverts == 1:
         hpath.result = True
         hpath.time = time() - start
         return
-
+    #if hpath exists, must be in the permutations
     for path in permutations(hpath.verts):
         for i in range(hpath.nverts - 1):
             if (path[i], path[i+1]) not in (hpath.edges):
                 break
-            
+            #if after edge exists between the second to last and last vertex, it is a hpath
             if i == hpath.nverts - 2:
                 hpath.result = True
                 hpath.time = time() - start
                 return
-    
+    #if not hpath get time; default value is already false for result
     hpath.time = time() - start
     return
 
 def write_file(hpath, file):
+    #simple write to file
     data = f'{hpath.ncase},{hpath.nverts},{hpath.is_hpath},{hpath.time}\n'
     file.write(data)
 
@@ -145,10 +149,6 @@ def main(args=sys.argv[1:]):
             
             #writing to csv
             write_file(hpath, file)
-
-    #for hpath, write results to csv
     
-
-
 if __name__ == "__main__":
     main()
